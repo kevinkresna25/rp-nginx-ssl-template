@@ -97,6 +97,7 @@ docker compose up -d
 **Interaktif (praktis):**
 
 ```bash
+cd scripts
 ./set-conf.sh
 # isi: domain, upstream (container), port (default 80), pilih step=1, konfirmasi restart
 ```
