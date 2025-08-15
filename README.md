@@ -238,3 +238,9 @@ location / {
 
 * YouTube: **Nginx Reverse Proxy + SSL Let’s Encrypt (Docker)**
   [https://www.youtube.com/watch?v=kMu8g5uGVRY](https://www.youtube.com/watch?v=kMu8g5uGVRY)
+
+---
+
+## License
+
+MIT © Kevin Kresna, 2025. [MIT License](LICENSE)
