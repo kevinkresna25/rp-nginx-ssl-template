@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-DEFAULT_EMAIL="thelolna15@gmail.com"
+DEFAULT_EMAIL=""
 
 detect_compose_cmd() {
   if command -v docker-compose >/dev/null 2>&1; then
