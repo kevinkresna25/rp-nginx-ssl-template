@@ -1,0 +1,34 @@
+# OS / Editor junk
+**/.DS_Store
+**/Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# Env files
+.env
+.env.*
+
+# Nginx runtime & logs (keep .gitkeep)
+rp-nginx-ssl/nginx/log/**
+!rp-nginx-ssl/nginx/log/.gitkeep
+rp-nginx-ssl/nginx/dhparam.pem
+
+# Certbot (certs, keys, renewal) — keep .gitkeep
+rp-nginx-ssl/certbot/etc/**
+!rp-nginx-ssl/certbot/etc/.gitkeep
+rp-nginx-ssl/certbot/www/**
+!rp-nginx-ssl/certbot/www/.gitkeep
+
+# Docker overrides / temp
+docker-compose.override.yml
+*.bak
+*.tmp
+
+# Generated vhost conf (track only templates + default)
+rp-nginx-ssl/nginx/conf/*.conf
+!rp-nginx-ssl/nginx/conf/default.conf
+!rp-nginx-ssl/nginx/conf/1first_step.1conf
+!rp-nginx-ssl/nginx/conf/1second_step.1conf

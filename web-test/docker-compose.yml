@@ -1,0 +1,14 @@
+services:
+  web-test:
+    build: .
+    container_name: web-test
+    ports:
+      - "8080:80"
+    networks:
+      - web-net
+    restart: always
+
+networks:
+  web-net:
+    name: web-net
+    driver: bridge
