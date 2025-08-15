@@ -74,22 +74,22 @@ cd web-test
 docker compose up -d --build
 ```
 
-2. **Jalankan reverse proxy (Nginx + Certbot)**
+2. **Inisialisasi**
 
 ```bash
-cd ../rp-nginx-ssl
-docker compose up -d
-```
-
-3. **Inisialisasi**
-
-```bash
-cd scripts
+cd ../rp-nginx-ssl/scripts
 ./initial.sh
 ```
 
 * Membuat `nginx/dhparam.pem` jika belum ada.
 * Mengecek `.conf` selain `default.conf`.
+
+3. **Jalankan reverse proxy (Nginx + Certbot)**
+
+```bash
+cd ..
+docker compose up -d
+```
 
 4. **Aktifkan Tahap 1 (HTTP + ACME)**
    Gunakan mode **interaktif** (tanpa argumen) **atau** CLI:

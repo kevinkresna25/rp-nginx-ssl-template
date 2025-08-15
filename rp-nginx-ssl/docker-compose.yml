@@ -9,7 +9,7 @@ services:
       - web-net
     volumes:
       - ./nginx/conf:/etc/nginx/conf.d
-      - ./nginx/dhparam.pem:/etc/nginx/dhparam.pem
+      - ./nginx/dhparam.pem:/etc/nginx/dhparam.pem:ro
       - ./nginx/log:/var/log/nginx
       - ./certbot/etc:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
