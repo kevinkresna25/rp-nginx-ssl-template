@@ -33,7 +33,7 @@ Template praktis untuk men-deploy **reverse proxy Nginx + SSL (Let’s Encrypt/C
 │   ├── certbot
 │   │   ├── etc               # Sertifikat Let's Encrypt
 │   │   └── www               # Webroot ACME challenge
-│   ├── docker-compose.yml    # Nginx + Certbot (join ke network: web-net)
+│   ├── docker-compose.yml    # Nginx + Certbot (membuat network rp-net otomatis)
 │   ├── nginx
 │   │   ├── conf
 │   │   │   ├── 1first_step.1conf    # Template tahap 1 (HTTP + ACME)
@@ -46,7 +46,7 @@ Template praktis untuk men-deploy **reverse proxy Nginx + SSL (Let’s Encrypt/C
 │       ├── restart.sh        # Restart Nginx (docker compose restart)
 │       └── set-conf.sh       # Generate vhost dari template (step 1/2)
 └── web-test
-    ├── docker-compose.yml    # Static site contoh (membuat network web-net otomatis)
+    ├── docker-compose.yml    # Static site contoh (join ke network: rp-net)
     ├── Dockerfile
     └── www/…                 # HTML/CSS/JS
 ```
@@ -59,7 +59,7 @@ Template praktis untuk men-deploy **reverse proxy Nginx + SSL (Let’s Encrypt/C
 * Port **80** dan **443** **terbuka** di firewall/server.
 * Docker & Docker Compose terpasang.
 
-> **Catatan jaringan:** `web-test/docker-compose.yml` sudah mendefinisikan network `web-net` (bridge). Jalankan `web-test` terlebih dahulu agar network `web-net` otomatis dibuat, lalu `rp-nginx-ssl` dapat join ke network tersebut.
+> **Catatan jaringan:** `rp-nginx-ssl/docker-compose.yml` sudah mendefinisikan network `rp-net` (bridge). Jalankan `rp-nginx-ssl` terlebih dahulu agar network `rp-net` otomatis dibuat, lalu `web-test` dapat join ke network tersebut.
 
 ---
 
@@ -67,28 +67,34 @@ Template praktis untuk men-deploy **reverse proxy Nginx + SSL (Let’s Encrypt/C
 
 Contoh: upstream target = container **`web-test`** port **80**.
 
-1. **Jalankan upstream (`web-test`)** – (membuat network `web-net` otomatis)
+0. **Berikan permission semua scripts**
 
 ```bash
-cd web-test
-docker compose up -d --build
+cd rp-nginx-ssl/scripts
+chmod +x *
 ```
 
-2. **Inisialisasi**
+1. **Inisialisasi**
 
 ```bash
-cd ../rp-nginx-ssl/scripts
 ./initial.sh
 ```
 
 * Membuat `nginx/dhparam.pem` jika belum ada.
 * Mengecek `.conf` selain `default.conf`.
 
-3. **Jalankan reverse proxy (Nginx + Certbot)**
+2. **Jalankan reverse proxy (Nginx + Certbot)**
 
 ```bash
 cd ..
 docker compose up -d
+```
+
+3. **Jalankan upstream (`web-test`)**
+
+```bash
+cd ../web-test
+docker compose up -d --build
 ```
 
 4. **Aktifkan Tahap 1 (HTTP + ACME)**
@@ -97,7 +103,7 @@ docker compose up -d
 **Interaktif (praktis):**
 
 ```bash
-cd scripts
+cd ../rp-nginx-ssl/scripts
 ./set-conf.sh
 # isi: domain, upstream (container), port (default 80), pilih step=1, konfirmasi restart
 ```

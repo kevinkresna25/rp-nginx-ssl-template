@@ -3,12 +3,11 @@ services:
     build: .
     container_name: web-test
     ports:
-      - "8080:80"
+      - "127.0.0.1:8080:80"
     networks:
-      - web-net
+      - rp-net
     restart: always
 
 networks:
-  web-net:
-    name: web-net
-    driver: bridge
+  rp-net:
+    external: true
